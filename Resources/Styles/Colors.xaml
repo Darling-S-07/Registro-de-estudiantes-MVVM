@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Paleta oficial de la aplicación (Slide 5 y Tarea 16) -->
+    <Color x:Key="Primary">#725DCF</Color>
+    <Color x:Key="Secondary">#EDE9FF</Color>
+    <Color x:Key="Accent">#FFB200</Color>
+    <Color x:Key="Gray600">#5E5873</Color>
+    <Color x:Key="Texto">#210635</Color>
+
+    <!-- Compatibilidad con nombres anteriores -->
+    <Color x:Key="AzulTitulo">#725DCF</Color>
+    <Color x:Key="Turquesa">#725DCF</Color>
+
+    <!-- Variantes para tema Claro y Oscuro -->
+    <Color x:Key="PrimaryDark">#9E86FF</Color>
+    <Color x:Key="PrimaryLight">#8C77EB</Color>
+    <Color x:Key="PrimaryDarkText">#14121F</Color>
+    <Color x:Key="SecondaryDarkText">#C8BEFF</Color>
+    <Color x:Key="Tertiary">#4B32A6</Color>
+
+    <!-- Fondos y Superficies -->
+    <Color x:Key="BackgroundLight">#F7F6FC</Color>
+    <Color x:Key="BackgroundDark">#13111E</Color>
+    <Color x:Key="SurfaceLight">#FFFFFF</Color>
+    <Color x:Key="SurfaceDark">#1F1C2E</Color>
+    <Color x:Key="SurfaceVariantLight">#F0EEF9</Color>
+    <Color x:Key="SurfaceVariantDark">#2A263D</Color>
+
+    <!-- Bordes -->
+    <Color x:Key="BorderLight">#DCD7F2</Color>
+    <Color x:Key="BorderDark">#383253</Color>
+
+    <!-- Textos -->
+    <Color x:Key="TextLight">#210635</Color>
+    <Color x:Key="TextDark">#F5F3FF</Color>
+    <Color x:Key="TextSecondaryLight">#5E5873</Color>
+    <Color x:Key="TextSecondaryDark">#A9A2C6</Color>
+
+    <!-- Estados Visuales (Enfoque / Focus) -->
+    <Color x:Key="FocusedLight">#EDE9FF</Color>
+    <Color x:Key="FocusedDark">#362E56</Color>
+    <Color x:Key="FocusedBorder">#725DCF</Color>
+
+    <!-- Alertas y botones de peligro/éxito -->
+    <Color x:Key="Danger">#C0392B</Color>
+    <Color x:Key="Success">#2ECC71</Color>
+
+    <!-- Escala de Grises y Básicos -->
+    <Color x:Key="White">White</Color>
+    <Color x:Key="Black">Black</Color>
+    <Color x:Key="Gray100">#F2F2F7</Color>
+    <Color x:Key="Gray200">#E2E0EC</Color>
+    <Color x:Key="Gray300">#C7C3D8</Color>
+    <Color x:Key="Gray400">#9E9AAF</Color>
+    <Color x:Key="Gray500">#78738D</Color>
+    <Color x:Key="Gray900">#211E30</Color>
+    <Color x:Key="Gray950">#13111E</Color>
+
+    <!-- Pinceles -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
+    <SolidColorBrush x:Key="SurfaceLightBrush" Color="{StaticResource SurfaceLight}"/>
+    <SolidColorBrush x:Key="SurfaceDarkBrush" Color="{StaticResource SurfaceDark}"/>
+</ResourceDictionary>

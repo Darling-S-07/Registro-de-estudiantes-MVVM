@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Registro_de_estudiantes_MVVM.Models"
+             xmlns:viewmodels="clr-namespace:Registro_de_estudiantes_MVVM.ViewModels"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             x:Class="Registro_de_estudiantes_MVVM.Views.RegistroPage"
+             x:DataType="viewmodels:RegistroViewModel"
+             Title="Registro de Estudiantes"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+
+    <!-- Recursos a nivel de página (Slide 4) -->
+    <ContentPage.Resources>
+        <Color x:Key="ColorPrimario">#725DCF</Color>
+        <Color x:Key="ColorTexto">#210635</Color>
+        <x:Double x:Key="TamanoTitulo">22</x:Double>
+        <Thickness x:Key="MargenPagina">20,16</Thickness>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{OnPlatform iOS='16,40,16,24', Default='20,16'}"
+                             Spacing="16">
+
+            <!-- ============================================================== -->
+            <!-- CONTROL DE TEMA: Switch con UserAppTheme, enlazado al ViewModel -->
+            <!-- ============================================================== -->
+            <Border StrokeThickness="1.5"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceVariantLight}, Dark={StaticResource SurfaceDark}}"
+                    Padding="16,12">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AlternarTemaCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <HorizontalStackLayout Grid.Column="0" Spacing="12" VerticalOptions="Center">
+                        <Border StrokeShape="RoundRectangle 20"
+                                StrokeThickness="0"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SurfaceVariantDark}}"
+                                VerticalOptions="Center">
+                            <Label Text="{Binding IconoTema}"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Spacing="1" VerticalOptions="Center">
+                            <Label Text="Modo Oscuro"
+                                   FontAttributes="Bold"
+                                   FontSize="15"
+                                   TextColor="{AppThemeBinding Light={StaticResource Texto}, Dark={StaticResource TextDark}}" />
+                            <Label Text="{Binding EstadoTema}"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource TextSecondaryDark}}" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <Switch Grid.Column="1"
+                            IsToggled="{Binding ModoOscuro, Mode=TwoWay}"
+                            OnColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                            ThumbColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}"
+                            VerticalOptions="Center"
+                            SemanticProperties.Description="Cambiar entre modo claro y modo oscuro" />
+                </Grid>
+            </Border>
+
+            <!-- Encabezado del Formulario -->
+            <Border StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                    Padding="18,14">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Formulario de Matrícula"
+                           FontAttributes="Bold"
+                           FontSize="{StaticResource TamanoTitulo}"
+                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                    <Label Text="Complete la información solicitada para el registro institucional."
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource TextSecondaryDark}}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ============================================================== -->
+            <!-- FORMULARIO ADAPTABLE: OnIdiom 1 col Phone, 2 col Tablet (Req 7) -->
+            <!-- ============================================================== -->
+            <Grid ColumnDefinitions="{OnIdiom Phone='*', Tablet='*,*', Desktop='*,*'}"
+                  RowDefinitions="{OnIdiom Phone='Auto,Auto', Tablet='Auto', Desktop='Auto'}"
+                  ColumnSpacing="18"
+                  RowSpacing="14">
+
+                <!-- COLUMNA 1 (En Tablet/Desktop Col 0, en Phone Fila 0 Col 0) -->
+                <VerticalStackLayout Grid.Column="0"
+                                     Grid.Row="0"
+                                     Spacing="12">
+
+                    <!-- Número de cuenta -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Número de cuenta *" FontAttributes="Bold" FontSize="13" />
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <Entry Text="{Binding NumeroCuenta, Mode=TwoWay}"
+                                   Placeholder="Ej. 20231001"
+                                   Keyboard="Numeric"
+                                   MaxLength="20"
+                                   ClearButtonVisibility="WhileEditing"
+                                   SemanticProperties.Description="Número de cuenta del estudiante" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Nombre completo -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Nombre completo *" FontAttributes="Bold" FontSize="13" />
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <Entry Text="{Binding NombreCompleto, Mode=TwoWay}"
+                                   Placeholder="Nombre y apellido"
+                                   Keyboard="Text"
+                                   MaxLength="150"
+                                   ClearButtonVisibility="WhileEditing"
+                                   SemanticProperties.Description="Nombre completo del estudiante" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Correo electrónico -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Correo electrónico *" FontAttributes="Bold" FontSize="13" />
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <Entry Text="{Binding Correo, Mode=TwoWay}"
+                                   Placeholder="ejemplo@correo.com"
+                                   Keyboard="Email"
+                                   MaxLength="150"
+                                   ClearButtonVisibility="WhileEditing"
+                                   SemanticProperties.Description="Correo electrónico del estudiante" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Teléfono -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Teléfono *" FontAttributes="Bold" FontSize="13" />
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <Entry Text="{Binding Telefono, Mode=TwoWay}"
+                                   Placeholder="Ej. 9999-9999"
+                                   Keyboard="Telephone"
+                                   MaxLength="20"
+                                   ClearButtonVisibility="WhileEditing"
+                                   SemanticProperties.Description="Número de teléfono del estudiante" />
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- COLUMNA 2 (En Tablet/Desktop Col 1 Fila 0, en Phone Col 0 Fila 1) -->
+                <VerticalStackLayout Grid.Column="{OnIdiom Phone=0, Tablet=1, Desktop=1}"
+                                     Grid.Row="{OnIdiom Phone=1, Tablet=0, Desktop=0}"
+                                     Spacing="12">
+
+                    <!-- Carrera -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Carrera *" FontAttributes="Bold" FontSize="13" />
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <Picker Title="Selecciona una carrera"
+                                    ItemsSource="{Binding Carreras}"
+                                    SelectedItem="{Binding CarreraSeleccionada, Mode=TwoWay}"
+                                    SemanticProperties.Description="Carrera del estudiante" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Fecha de nacimiento -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Fecha de nacimiento *" FontAttributes="Bold" FontSize="13" />
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <DatePicker Date="{Binding FechaNacimiento, Mode=TwoWay}"
+                                        Format="dd/MM/yyyy"
+                                        MaximumDate="{x:Static sys:DateTime.Today}"
+                                        SemanticProperties.Description="Fecha de nacimiento del estudiante" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Género -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Género *" FontAttributes="Bold" FontSize="13" />
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                Padding="12,6"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <HorizontalStackLayout Spacing="16">
+                                <RadioButton Content="Masculino" GroupName="Genero"
+                                             IsChecked="{Binding EsMasculino, Mode=TwoWay}" />
+                                <RadioButton Content="Femenino" GroupName="Genero"
+                                             IsChecked="{Binding EsFemenino, Mode=TwoWay}" />
+                                <RadioButton Content="Otro" GroupName="Genero"
+                                             IsChecked="{Binding EsOtro, Mode=TwoWay}" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Términos y condiciones -->
+                    <Border Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                            StrokeShape="RoundRectangle 8"
+                            StrokeThickness="1"
+                            Padding="12,8"
+                            Margin="0,4,0,0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                        <HorizontalStackLayout Spacing="8">
+                            <CheckBox IsChecked="{Binding AceptaTerminos, Mode=TwoWay}"
+                                      SemanticProperties.Description="Acepto los términos y condiciones" />
+                            <Label Text="Acepto los términos y condiciones *"
+                                   VerticalOptions="Center"
+                                   FontSize="13" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- ============================================================== -->
+            <!-- BOTONES DE ACCIÓN: GuardarCommand con CanExecute (Req. 5)      -->
+            <!-- ============================================================== -->
+            <HorizontalStackLayout Spacing="14" Margin="0,8,0,0">
+                <Button Text="Guardar estudiante"
+                        Style="{StaticResource BotonPrimario}"
+                        Command="{Binding GuardarCommand}"
+                        SemanticProperties.Description="Guarda la información del estudiante" />
+
+                <Button Text="Limpiar"
+                        Style="{StaticResource BotonSecundario}"
+                        Command="{Binding LimpiarCommand}"
+                        SemanticProperties.Description="Limpia el formulario" />
+            </HorizontalStackLayout>
+
+            <!-- ============================================================== -->
+            <!-- LISTA DE ESTUDIANTES REGISTRADOS (Req. 6: CollectionView)      -->
+            <!-- ============================================================== -->
+            <VerticalStackLayout Spacing="6" Margin="0,16,0,4">
+                <Label Text="{Binding TituloLista}"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                       SemanticProperties.HeadingLevel="Level2" />
+            </VerticalStackLayout>
+
+            <CollectionView ItemsSource="{Binding Estudiantes}">
+                <CollectionView.EmptyView>
+                    <Label Text="Aún no hay estudiantes registrados."
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                           Margin="0,8" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Estudiante">
+                        <Border Padding="14"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="{AppThemeBinding Light={StaticResource BorderLight}, Dark={StaticResource BorderDark}}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <VerticalStackLayout Spacing="4">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="🎓" FontSize="14" VerticalOptions="Center" />
+                                    <Label Text="{Binding NombreCompleto}"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           TextColor="{AppThemeBinding Light={StaticResource Texto}, Dark={StaticResource TextDark}}" />
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding NumeroCuenta, StringFormat='Cuenta: {0}'}"
+                                       FontSize="13"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Label Text="{Binding Carrera, StringFormat='Carrera: {0}'}"
+                                       FontSize="13"
+                                       TextColor="{AppThemeBinding Light={StaticResource Texto}, Dark={StaticResource TextDark}}" />
+                                <Label Text="{Binding Telefono, StringFormat='Teléfono: {0}'}"
+                                       FontSize="13"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                <Label Text="{Binding Correo, StringFormat='Correo: {0}'}"
+                                       FontSize="13"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                <Label Text="{Binding FechaNacimiento, StringFormat='Fecha de Nacimiento: {0:dd/MM/yyyy}'}"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                <Label Text="{Binding Genero, StringFormat='Género: {0}'}"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
